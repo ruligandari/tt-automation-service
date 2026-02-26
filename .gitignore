@@ -1,0 +1,17 @@
+# Binaries for programs and plugins
+main
+
+# Local environment files
+.env
+.env.local
+
+# Project Specific Docs / Examples
+BLUEPRINT.MD
+contoh-webhook.json
+CURL-WHATSAPP.txt
+
+# OS generated files
+.DS_Store
+
+# Go specific
+vendor/

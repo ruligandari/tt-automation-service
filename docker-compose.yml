@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  tiktok-automation:
+    build:
+      context: .
+      args:
+        TARGETOS: linux
+        TARGETARCH: amd64 # Change to arm64 for Apple Silicon / ARM servers
+    image: tiktok-automation-service:latest
+    container_name: tiktok-webhook-service
+    ports:
+      - "8080:${PORT:-8080}"
+    environment:
+      - PORT=${PORT:-8080}
+      - SESSION_ID=${SESSION_ID}
+      - RAPIDAPI_HOST=${RAPIDAPI_HOST}
+      - RAPIDAPI_KEYS=${RAPIDAPI_KEYS}
+      - WA_API_URL=${WA_API_URL}
+      - WA_API_KEY=${WA_API_KEY}
+    env_file:
+      - .env
+    restart: unless-stopped
+    # Use healthcheck to ensure service is up
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:${PORT:-8080}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
