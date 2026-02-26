@@ -4,9 +4,6 @@ services:
   tiktok-automation:
     build:
       context: .
-      args:
-        TARGETOS: linux
-        TARGETARCH: amd64 # Change to arm64 for Apple Silicon / ARM servers
     image: tiktok-automation-service:latest
     container_name: tiktok-webhook-service
     ports:

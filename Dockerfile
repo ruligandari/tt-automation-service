@@ -17,9 +17,10 @@ COPY . .
 
 # Build the Go app
 # Use ARG to allow multi-arch build
-ARG TARGETOS
+ARG TARGETOS=linux
 ARG TARGETARCH
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo -o main cmd/server/main.go
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -a -installsuffix cgo -o main cmd/server/main.go || \
+    CGO_ENABLED=0 go build -a -installsuffix cgo -o main cmd/server/main.go
 
 # Final stage
 FROM alpine:latest
